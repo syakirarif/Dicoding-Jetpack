@@ -1,6 +1,6 @@
 package com.syakir.academy.data
 
-data class CourseEntity (
+data class CourseEntity(
     var courseId: String,
     var title: String,
     var description: String,
