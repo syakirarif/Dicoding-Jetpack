@@ -6,12 +6,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.syakir.academy.R
 import com.syakir.academy.data.ModuleEntity
 import com.syakir.academy.reader.CourseReaderActivity
 import com.syakir.academy.reader.CourseReaderCallback
+import com.syakir.academy.reader.CourseReaderViewModel
 import com.syakir.academy.utils.DataDummy
 import kotlinx.android.synthetic.main.fragment_module_list.*
 
@@ -28,6 +30,7 @@ class ModuleListFragment : Fragment(), MyAdapterClickListener {
 
     private lateinit var adapter: ModuleListAdapter
     private lateinit var courseReaderCallback: CourseReaderCallback
+    private lateinit var viewModel: CourseReaderViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,8 +43,13 @@ class ModuleListFragment : Fragment(), MyAdapterClickListener {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        viewModel = ViewModelProvider(
+            requireActivity(),
+            ViewModelProvider.NewInstanceFactory()
+        )[CourseReaderViewModel::class.java]
+
         adapter = ModuleListAdapter(this)
-        populateRecyclerView(DataDummy.generateDummyModules("a14"))
+        populateRecyclerView(viewModel.getModules())
     }
 
     override fun onAttach(context: Context) {
@@ -51,6 +59,7 @@ class ModuleListFragment : Fragment(), MyAdapterClickListener {
 
     override fun onItemClicked(position: Int, moduleId: String) {
         courseReaderCallback.moveTo(position, moduleId)
+        viewModel.setSelectedModule(moduleId)
     }
 
     private fun populateRecyclerView(modules: List<ModuleEntity>) {
@@ -59,7 +68,8 @@ class ModuleListFragment : Fragment(), MyAdapterClickListener {
         rv_module.layoutManager = LinearLayoutManager(context)
         rv_module.setHasFixedSize(true)
         rv_module.adapter = adapter
-        val dividerItemDecoration = DividerItemDecoration(rv_module.context, DividerItemDecoration.VERTICAL)
+        val dividerItemDecoration =
+            DividerItemDecoration(rv_module.context, DividerItemDecoration.VERTICAL)
         rv_module.addItemDecoration(dividerItemDecoration)
     }
 
