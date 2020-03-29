@@ -2,10 +2,10 @@ package com.syakir.academy.reader.list
 
 import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,7 +14,7 @@ import com.syakir.academy.data.ModuleEntity
 import com.syakir.academy.reader.CourseReaderActivity
 import com.syakir.academy.reader.CourseReaderCallback
 import com.syakir.academy.reader.CourseReaderViewModel
-import com.syakir.academy.utils.DataDummy
+import com.syakir.academy.viewmodel.ViewModelFactory
 import kotlinx.android.synthetic.main.fragment_module_list.*
 
 /**
@@ -42,10 +42,10 @@ class ModuleListFragment : Fragment(), MyAdapterClickListener {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
+        val factory = ViewModelFactory.getInstance(requireActivity())
         viewModel = ViewModelProvider(
             requireActivity(),
-            ViewModelProvider.NewInstanceFactory()
+            factory
         )[CourseReaderViewModel::class.java]
 
         adapter = ModuleListAdapter(this)

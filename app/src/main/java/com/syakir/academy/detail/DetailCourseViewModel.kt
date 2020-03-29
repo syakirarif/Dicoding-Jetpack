@@ -3,9 +3,9 @@ package com.syakir.academy.detail
 import androidx.lifecycle.ViewModel
 import com.syakir.academy.data.CourseEntity
 import com.syakir.academy.data.ModuleEntity
-import com.syakir.academy.utils.DataDummy
+import com.syakir.academy.data.source.AcademyRepository
 
-class DetailCourseViewModel : ViewModel() {
+class DetailCourseViewModel(private val academyRepository: AcademyRepository) : ViewModel() {
 
     private lateinit var courseId: String
 
@@ -13,20 +13,8 @@ class DetailCourseViewModel : ViewModel() {
         this.courseId = courseId
     }
 
-    fun getCourse(): CourseEntity {
-        lateinit var course: CourseEntity
+    fun getCourse(): CourseEntity = academyRepository.getCourseWithModules(courseId)
 
-        val coursesEntities = DataDummy.generateDummyCourses()
-
-        for (courseEntity in coursesEntities) {
-            if (courseEntity.courseId == courseId) {
-                course = courseEntity
-            }
-        }
-
-        return course
-    }
-
-    fun getModules(): List<ModuleEntity> = DataDummy.generateDummyModules(courseId)
+    fun getModules(): List<ModuleEntity> = academyRepository.getAllModulesByCourse(courseId)
 
 }

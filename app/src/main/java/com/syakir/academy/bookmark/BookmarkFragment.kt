@@ -1,16 +1,16 @@
 package com.syakir.academy.bookmark
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.app.ShareCompat
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.syakir.academy.R
 import com.syakir.academy.data.CourseEntity
-import com.syakir.academy.utils.DataDummy
+import com.syakir.academy.viewmodel.ViewModelFactory
 import kotlinx.android.synthetic.main.fragment_bookmark.*
 
 /**
@@ -30,10 +30,10 @@ class BookmarkFragment : Fragment(), BookmarkFragmentCallback {
         super.onActivityCreated(savedInstanceState)
 
         if (activity != null) {
-
+            val factory = ViewModelFactory.getInstance(requireActivity())
             val viewModel = ViewModelProvider(
                 this,
-                ViewModelProvider.NewInstanceFactory()
+                factory
             )[BookmarkViewModel::class.java]
 
             val courses = viewModel.getBookmarks()

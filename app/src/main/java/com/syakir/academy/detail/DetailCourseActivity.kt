@@ -2,7 +2,6 @@ package com.syakir.academy.detail
 
 import android.content.Intent
 import android.os.Bundle
-import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -12,8 +11,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.syakir.academy.R
 import com.syakir.academy.data.CourseEntity
 import com.syakir.academy.reader.CourseReaderActivity
-import com.syakir.academy.utils.DataDummy
-
+import com.syakir.academy.viewmodel.ViewModelFactory
 import kotlinx.android.synthetic.main.activity_detail_course.*
 import kotlinx.android.synthetic.main.content_detail_course.*
 
@@ -25,10 +23,10 @@ class DetailCourseActivity : AppCompatActivity() {
 
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
+        val factory = ViewModelFactory.getInstance(this)
         val viewModel = ViewModelProvider(
             this,
-            ViewModelProvider.NewInstanceFactory()
+            factory
         )[DetailCourseViewModel::class.java]
 
         val adapter = DetailCourseAdapter()

@@ -1,12 +1,12 @@
 package com.syakir.academy.reader
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.syakir.academy.R
-import com.syakir.academy.detail.DetailCourseAdapter
 import com.syakir.academy.reader.content.ModuleContentFragment
 import com.syakir.academy.reader.list.ModuleListFragment
+import com.syakir.academy.viewmodel.ViewModelFactory
 
 class CourseReaderActivity : AppCompatActivity(), CourseReaderCallback {
 
@@ -19,8 +19,8 @@ class CourseReaderActivity : AppCompatActivity(), CourseReaderCallback {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_course_reader)
-
-        viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())[CourseReaderViewModel::class.java]
+        val factory = ViewModelFactory.getInstance(this)
+        viewModel = ViewModelProvider(this, factory)[CourseReaderViewModel::class.java]
 
         val bundle = intent.extras
 
